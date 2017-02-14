@@ -5,14 +5,17 @@ public class Aula06 {
 	public static void main(String[] args) {
 		
 		// Objeto criado
-		ControleRemoto c = new ControleRemoto();
+		ControleRemoto c1 = new ControleRemoto();
+		ControleRemoto c2 = new ControleRemoto();
 		
-		c.ligar();
-		c.maisVolume();
-		c.play();
-		c.pause();
-		c.maisVolume();
-		c.abrirMenu();
-		c.fecharMenu();
+		c1.ligar();
+		c1.maisVolume();
+		c1.play();
+		c1.pause();
+		c1.maisVolume();
+		c1.abrirMenu();
+		c1.fecharMenu();
+		
+		c2.ligar();
 	}
 }
