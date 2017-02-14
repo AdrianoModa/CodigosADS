@@ -97,6 +97,7 @@ public class Mp3 extends JFrame {
 					java.awt.Desktop.getDesktop().open(new File("C:/Windows/System32/SndVol.exe"));
 				} catch (IOException e) {
 					e.printStackTrace();
+					System.out.println("Erro ao Abrir arquivo!");
 				}
 			}
 		});
@@ -142,25 +143,17 @@ public class Mp3 extends JFrame {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-						System.out.println("if 1");
 					}else{
 						numPressed--;
 						notify();
-						System.out.println("if 2");
 					}
 				}
-				/*synchronized (this) {
+							
+				/*synchronized(this) {
 					while(tocar != null){
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-							System.out.println("esperando 0.5 segundo");
-							e.printStackTrace();
-						}
-					}
-					
-				}*/
-				
+						tocar = null;
+					}					
+				}*/				
 			}
 		});
 		pause.setIcon(new ImageIcon(Mp3.class.getResource("/imagens/pause_black.png")));
