@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 import com.exemplo.entidade.Cliente;
 import com.exemplo.entidade.repositorio.RepositorioCliente;
 
-public class TelaPrincipal extends JFrame {
+public class TelaAtualizar extends JFrame {
 
 	/**
 	 * @author AndroidC22
@@ -25,11 +24,8 @@ public class TelaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton btnCadastrar;
-	private JButton btnExibir;
 	private JButton btnAtualizar;
-	private JButton btnRemover;
-	private JButton btnSair;
+	private JButton btnVoltar;
 	private JLabel lblNome;
 	private JLabel lblIdade;
 	private JLabel lblEndereco;
@@ -44,11 +40,12 @@ public class TelaPrincipal extends JFrame {
 	private JTextField campoCpf;
 	private Cliente cliente;
 	private RepositorioCliente repositorioCliente;
+	private JTextField campoID;
 
 	public static void main(String[] args){
 		EventQueue.invokeLater(new Runnable(){
 			public void run(){
-				TelaPrincipal frame = new TelaPrincipal();
+				TelaAtualizar frame = new TelaAtualizar();
 				frame.setVisible(true);
 			}
 		});
@@ -63,7 +60,7 @@ public class TelaPrincipal extends JFrame {
 		campoCpf.setText("");
 	}
 
-	public TelaPrincipal(){
+	public TelaAtualizar(){
 		setTitle("Cadastro Cliente");
 		setResizable(false);
 		try {
@@ -77,16 +74,15 @@ public class TelaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 
-		btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
+		btnAtualizar = new JButton();
+		btnAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				if(campoNome.getText().isEmpty() || campoIdade.getText().isEmpty() || campoEndereco.getText().isEmpty() 
 						|| campoTelefone.getText().isEmpty() || campoRg.getText().isEmpty() || campoCpf.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Os campos não podem ficar vazios", "Erro", JOptionPane.WARNING_MESSAGE);
-				}else{
-
+				}else{					
 					repositorioCliente = new RepositorioCliente();
-					cliente = new Cliente();
+					cliente = repositorioCliente.obterPorId(Integer.valueOf(campoID.getText()));
 					cliente.setNome(campoNome.getText());
 					cliente.setIdade(Integer.valueOf(campoIdade.getText()));
 					cliente.setEndereco(campoEndereco.getText());
@@ -94,64 +90,25 @@ public class TelaPrincipal extends JFrame {
 					cliente.setRg(campoRg.getText());
 					cliente.setCpf(campoCpf.getText());
 					repositorioCliente.salvar(cliente);
-					JOptionPane.showMessageDialog(null, "Cliente Cadastrado com Sucesso!","Cadastro",JOptionPane.INFORMATION_MESSAGE);
-					limpaCampos();
+					JOptionPane.showMessageDialog(null, "Cadastro Atualizado com Sucesso!","Atualizar Cadastro", JOptionPane.INFORMATION_MESSAGE);
+					TelaPrincipal telaPrincipal = new TelaPrincipal();
+					telaPrincipal.limpaCampos();
 				}
 			}
 		});
-		btnCadastrar.setBounds(335, 38, 125, 30);
-		contentPane.add(btnCadastrar);
-
-		btnExibir = new JButton("Exibir Cadastrados");
-		btnExibir.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
-				List<Cliente> cliente = new RepositorioCliente().listarTodos();
-				for (Cliente clientes : cliente) {
-					System.out.println("<<<< Cliente >>>>\n");
-					System.out.println("Id do Cliente " + clientes.getId());
-					System.out.println("Nome: " + clientes.getNome());
-					System.out.println("Idade " + clientes.getIdade());
-					System.out.println("Endereco: " + clientes.getEndereco());
-					System.out.println("Telefone: " + clientes.getTelefone());
-					System.out.println("RG: " + clientes.getRg());
-					System.out.println("CPF " + clientes.getCpf());
-				}
-			}
-		});
-		btnExibir.setBounds(335, 87, 125, 30);
-		contentPane.add(btnExibir);	
-
-		btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
-				TelaAtualizar telaAtualizar = new TelaAtualizar();
-				telaAtualizar.setVisible(true);
-			}
-		});
+		btnAtualizar.setText("Atualizar");
 		btnAtualizar.setBounds(335, 140, 125, 30);
 		contentPane.add(btnAtualizar);
 
-		btnRemover = new JButton();
-		btnRemover.addActionListener(new ActionListener() {
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int idRemover = Integer.valueOf(JOptionPane.showInputDialog(null, "Entre com o ID do Cliente para Remover!"));
-				RepositorioCliente repositorioClienteRemover = new RepositorioCliente();
-				Cliente clienteRemover = repositorioClienteRemover.obterPorId(idRemover);
-				repositorioClienteRemover.remover(clienteRemover);
+				TelaPrincipal telaPrincipal = new TelaPrincipal();
+				telaPrincipal.setVisible(true);
 			}
 		});
-		btnRemover.setText("Remover");
-		btnRemover.setBounds(335, 194, 125, 30);
-		contentPane.add(btnRemover);
-
-		btnSair = new JButton("Sair");
-		btnSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-			}
-		});
-		btnSair.setBounds(335, 242, 125, 30);
-		contentPane.add(btnSair);
+		btnVoltar.setBounds(335, 194, 125, 30);
+		contentPane.add(btnVoltar);
 
 		lblNome = new JLabel("Nome: ");
 		lblNome.setBounds(10, 45, 66, 14);
@@ -200,5 +157,23 @@ public class TelaPrincipal extends JFrame {
 		campoCpf = new JTextField();
 		campoCpf.setBounds(70, 255, 200, 20);
 		contentPane.add(campoCpf);
+		
+		JLabel lblId = new JLabel("ID do Cliente");
+		lblId.setBounds(335, 45, 66, 14);
+		contentPane.add(lblId);
+		
+		campoID = new JTextField();
+		campoID.setBounds(404, 45, 56, 20);
+		contentPane.add(campoID);
+		campoID.setColumns(10);
+		
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		btnSair.setBounds(335, 242, 125, 30);
+		contentPane.add(btnSair);
 	}
 }
