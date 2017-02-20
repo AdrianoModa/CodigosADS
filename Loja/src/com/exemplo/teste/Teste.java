@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import com.exemplo.entidade.Cliente;
-import com.exemplo.repositorio.RepositorioCliente;
+import com.exemplo.entidade.repositorio.RepositorioCliente;
 
 public class Teste {
 
@@ -16,8 +16,10 @@ public class Teste {
 		
 		String cadCliente = JOptionPane.showInputDialog(null, "Entre com o nome do Cliente:");
 		String cadIdade = JOptionPane.showInputDialog(null, "Entre com a idade do Cliente:");
+		String cadRg = JOptionPane.showInputDialog(null, "Entre com o RG do Cliente:");
 		cliente.setNome(cadCliente);
 		cliente.setIdade(Integer.valueOf(cadIdade));
+		cliente.setRg(cadRg);
 		
 		repositorioCliente.salvar(cliente); // adiciona o cliente
 		

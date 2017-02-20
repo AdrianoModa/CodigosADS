@@ -1,4 +1,4 @@
-package com.exemplo.repositorio;
+package com.exemplo.entidade.repositorio;
 
 import java.util.List;
 import javax.persistence.EntityManager;
