@@ -4,6 +4,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Cliente {	
+	/**
+	 * @author Adriano Moda
+	 * @since 21/02/2017
+	 */
 	
 	int id;
 	String nome;
