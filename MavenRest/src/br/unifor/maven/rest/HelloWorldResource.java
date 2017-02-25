@@ -11,6 +11,6 @@ public class HelloWorldResource {
 	@GET
 	@Produces("text/plain")
 	public String showHelloWorld() {
-		return "Olá mundo!";
+		return "Olá mundo! Maven com Rest";
 	}
 }
