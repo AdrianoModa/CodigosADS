@@ -15,9 +15,9 @@ public class JAXBExemplo {
 		
 		Cliente c1 = new Cliente();
 		c1.setNome("Adriano Moda Feitosa");
-		c1.setIdade(33);
+		c1.setIdade(34);
 		c1.setSexo('M');
-		c1.setEndereco("Rua X, n.20, – FunnyLand");
+		c1.setEndereco("Rua X, n.20, ï¿½ FunnyLand");
 		c1.setTelefone("+55853223-5995");
 		
 		try {
