@@ -31,13 +31,10 @@ public class MinhaThread implements Runnable {
 					}
 				}
 			}
-
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
-		} 
-
+		}
 		System.out.println("Terminada " + this.nomeThread);
-
 	}
 	
 	synchronized void comecar(){

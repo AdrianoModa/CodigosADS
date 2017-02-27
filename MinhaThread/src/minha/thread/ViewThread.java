@@ -30,7 +30,8 @@ public class ViewThread extends JFrame {
 	private JButton btnSair;
 	private JTextField campoNomeThread;
 	private String threadMensagem;
-	private MinhaThread thread = new MinhaThread("Thread #01",1000);
+	private MinhaThread thread;
+
 
 	public static void main(String[] args){
 		EventQueue.invokeLater(new Runnable(){
@@ -58,9 +59,12 @@ public class ViewThread extends JFrame {
 		btnIniciar = new JButton("Iniciar");
 		btnIniciar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
-				thread.comecar();
-				threadMensagem = "Iniciando Thread";
-				campoNomeThread.setText(threadMensagem);
+				if(thread == null){
+					thread = new MinhaThread("Thread #01", 1000);
+					thread.comecar();
+					threadMensagem = "Iniciando Thread";
+					campoNomeThread.setText(threadMensagem);
+				}				
 			}
 		});
 		btnIniciar.setBounds(56, 119, 202, 30);
@@ -92,8 +96,9 @@ public class ViewThread extends JFrame {
 		btnParar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				thread.stop();
+				thread = null;
 				threadMensagem = "Thread Parada!";
-				campoNomeThread.setText(threadMensagem);
+				campoNomeThread.setText(threadMensagem);			
 			}
 		});	
 		btnParar.setBounds(56, 254, 202, 30);
