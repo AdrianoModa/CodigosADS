@@ -3,8 +3,12 @@ package com.exemplo.views;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +19,8 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import com.exemplo.entidade.Cliente;
 import com.exemplo.entidade.repositorio.RepositorioCliente;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class TelaPrincipal extends JFrame {
 
@@ -30,6 +36,7 @@ public class TelaPrincipal extends JFrame {
 	private JButton btnAtualizar;
 	private JButton btnRemover;
 	private JButton btnSair;
+	private JButton buttonDataBase;
 	private JLabel lblNome;
 	private JLabel lblIdade;
 	private JLabel lblEndereco;
@@ -53,7 +60,7 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 	}
-	
+
 	public void limpaCampos(){
 		campoNome.setText("");
 		campoIdade.setText("");
@@ -71,20 +78,22 @@ public class TelaPrincipal extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		setBounds(250, 100, 489, 344);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(250, 100, 489, 353);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 
 		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnCadastrar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/com/exemplo/imagens/account-plus.png")));
 		btnCadastrar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				if(campoNome.getText().isEmpty() || campoIdade.getText().isEmpty() || campoEndereco.getText().isEmpty() 
 						|| campoTelefone.getText().isEmpty() || campoRg.getText().isEmpty() || campoCpf.getText().isEmpty()){
-					JOptionPane.showMessageDialog(null, "Os campos não podem ficar vazios", "Erro", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Os campos não podem ficar vazios", "Aviso", JOptionPane.WARNING_MESSAGE);
 				}else{
-
 					repositorioCliente = new RepositorioCliente();
 					cliente = new Cliente();
 					cliente.setNome(campoNome.getText());
@@ -99,59 +108,92 @@ public class TelaPrincipal extends JFrame {
 				}
 			}
 		});
-		btnCadastrar.setBounds(335, 38, 125, 30);
+		btnCadastrar.setBounds(307, 38, 153, 30);
 		contentPane.add(btnCadastrar);
 
 		btnExibir = new JButton("Exibir Cadastrados");
+		btnExibir.setHorizontalAlignment(SwingConstants.LEFT);
+		btnExibir.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/com/exemplo/imagens/file-document-box.png")));
 		btnExibir.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				List<Cliente> cliente = new RepositorioCliente().listarTodos();
+				String exibeCadastro = "<< Clientes Cadastrados >> \r\r\n";
 				for (Cliente clientes : cliente) {
-					System.out.println("<<<< Cliente >>>>\n");
-					System.out.println("Id do Cliente " + clientes.getId());
-					System.out.println("Nome: " + clientes.getNome());
-					System.out.println("Idade " + clientes.getIdade());
-					System.out.println("Endereco: " + clientes.getEndereco());
-					System.out.println("Telefone: " + clientes.getTelefone());
-					System.out.println("RG: " + clientes.getRg());
-					System.out.println("CPF " + clientes.getCpf());
+					exibeCadastro += 
+							"Id do Cliente " + clientes.getId() +  "\r\n" +
+									"Nome: " + clientes.getNome() + "\r\n" +
+									"Idade " + clientes.getIdade() + "\r\n" +
+									"Endereco: " + clientes.getEndereco() + "\r\n" +
+									"Telefone: " + clientes.getTelefone() + "\r\n" +
+									"RG: " + clientes.getRg() + "\r\n" +
+									"CPF " + clientes.getCpf() +  "\r\n" + "\r\n";
+				}
+				Path caminho = Paths.get("C:/Users/AndroidC22/Desktop/Cadastrados Cliente.txt");
+				byte[] lerCadastro = exibeCadastro.getBytes();
+				try {
+					Files.write(caminho, lerCadastro);
+					java.awt.Desktop.getDesktop().open(new File("C:/Users/AndroidC22/Desktop/Cadastrados Cliente.txt"));
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 		});
-		btnExibir.setBounds(335, 87, 125, 30);
+		btnExibir.setBounds(307, 87, 153, 30);
 		contentPane.add(btnExibir);	
 
 		btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnAtualizar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/com/exemplo/imagens/file-restore.png")));
 		btnAtualizar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
-				TelaAtualizar telaAtualizar = new TelaAtualizar();
-				telaAtualizar.setVisible(true);
+					new TelaAtualizar().setVisible(true);
+					new TelaPrincipal().setEnabled(false);
 			}
 		});
-		btnAtualizar.setBounds(335, 140, 125, 30);
+		btnAtualizar.setBounds(307, 140, 153, 30);
 		contentPane.add(btnAtualizar);
 
 		btnRemover = new JButton();
-		btnRemover.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnRemover.setHorizontalAlignment(SwingConstants.LEFT);
+		btnRemover.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/com/exemplo/imagens/delete-forever.png")));
+		btnRemover.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0){
 				int idRemover = Integer.valueOf(JOptionPane.showInputDialog(null, "Entre com o ID do Cliente para Remover!"));
 				RepositorioCliente repositorioClienteRemover = new RepositorioCliente();
 				Cliente clienteRemover = repositorioClienteRemover.obterPorId(idRemover);
 				repositorioClienteRemover.remover(clienteRemover);
+				JOptionPane.showMessageDialog(null,"Cliente Removido com Sucesso!","Remover Cliente",JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		btnRemover.setText("Remover");
-		btnRemover.setBounds(335, 194, 125, 30);
+		btnRemover.setBounds(307, 194, 153, 30);
 		contentPane.add(btnRemover);
 
 		btnSair = new JButton("Sair");
+		btnSair.setHorizontalAlignment(SwingConstants.LEFT);
+		btnSair.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/com/exemplo/imagens/exit-to-app.png")));
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
 			}
 		});
-		btnSair.setBounds(335, 242, 125, 30);
+		btnSair.setBounds(307, 242, 153, 30);
 		contentPane.add(btnSair);
+
+		buttonDataBase = new JButton("");
+		buttonDataBase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					java.awt.Desktop.getDesktop().open(new File("C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\MySQL\\MySQL Server 5.7\\MySQL 5.7 Command Line Client.lnk"));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Erro ao Abrir o Arquivo","Erro",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		buttonDataBase.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/com/exemplo/imagens/database-plus.png")));
+		buttonDataBase.setBounds(424, 290, 36, 27);
+		contentPane.add(buttonDataBase);
 
 		lblNome = new JLabel("Nome: ");
 		lblNome.setBounds(10, 45, 66, 14);

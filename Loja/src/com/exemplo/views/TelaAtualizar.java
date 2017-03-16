@@ -13,6 +13,9 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import com.exemplo.entidade.Cliente;
 import com.exemplo.entidade.repositorio.RepositorioCliente;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class TelaAtualizar extends JFrame {
 
@@ -25,6 +28,7 @@ public class TelaAtualizar extends JFrame {
 	private JPanel contentPane;
 	private JButton btnAtualizar;
 	private JButton btnVoltar;
+	private JButton btnSair;
 	private JLabel lblNome;
 	private JLabel lblIdade;
 	private JLabel lblEndereco;
@@ -45,7 +49,7 @@ public class TelaAtualizar extends JFrame {
 		EventQueue.invokeLater(new Runnable(){
 			public void run(){
 				TelaAtualizar frame = new TelaAtualizar();
-				frame.setVisible(true);
+				frame.setVisible(false);
 			}
 		});
 	}
@@ -74,6 +78,8 @@ public class TelaAtualizar extends JFrame {
 		setContentPane(contentPane);
 
 		btnAtualizar = new JButton();
+		btnAtualizar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnAtualizar.setIcon(new ImageIcon(TelaAtualizar.class.getResource("/com/exemplo/imagens/file-restore.png")));
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(campoNome.getText().isEmpty() || campoIdade.getText().isEmpty() || campoEndereco.getText().isEmpty() 
@@ -100,14 +106,27 @@ public class TelaAtualizar extends JFrame {
 		contentPane.add(btnAtualizar);
 
 		btnVoltar = new JButton("Voltar");
+		btnVoltar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnVoltar.setIcon(new ImageIcon(TelaAtualizar.class.getResource("/com/exemplo/imagens/keyboard-backspace.png")));
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				TelaPrincipal telaPrincipal = new TelaPrincipal();
-				telaPrincipal.setVisible(true);
+				new TelaPrincipal().setVisible(true);
+				dispose();
 			}
 		});
 		btnVoltar.setBounds(335, 194, 125, 30);
 		contentPane.add(btnVoltar);
+		
+		btnSair = new JButton("Sair");
+		btnSair.setHorizontalAlignment(SwingConstants.LEFT);
+		btnSair.setIcon(new ImageIcon(TelaAtualizar.class.getResource("/com/exemplo/imagens/exit-to-app.png")));
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		btnSair.setBounds(335, 242, 125, 30);
+		contentPane.add(btnSair);
 
 		lblNome = new JLabel("Nome: ");
 		lblNome.setBounds(10, 45, 66, 14);
@@ -165,14 +184,5 @@ public class TelaAtualizar extends JFrame {
 		campoID.setBounds(404, 45, 56, 20);
 		contentPane.add(campoID);
 		campoID.setColumns(10);
-		
-		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-			}
-		});
-		btnSair.setBounds(335, 242, 125, 30);
-		contentPane.add(btnSair);
 	}
 }
