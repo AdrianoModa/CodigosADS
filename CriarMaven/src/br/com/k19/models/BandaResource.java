@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -50,10 +51,17 @@ public class BandaResource {
 		return new ArrayList<Banda>(bandasMap.values());
 	}
 
-	@Path("{id}")
+	@Path("/exibir/{id}")
 	@GET
 	@Produces("text/xml")
 	public Banda getBanda(@PathParam("id") int id) {
 		return bandasMap.get(id);
 	}	
+	
+	@Path("/excluir/{id}")
+	@DELETE
+	@Produces("text/xml")
+	public Banda removeBanda(@PathParam("id") int id) {
+		return bandasMap.remove(id);
+	}
 }
