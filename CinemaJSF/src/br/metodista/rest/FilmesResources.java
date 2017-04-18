@@ -47,17 +47,14 @@ public class FilmesResources {
 		return this.listaFilmes;
 	}	
 	
-	
 	@POST
 	@Consumes("application/json")
 	@Produces("text/plain")
 	public String adicionaFilme(Filme Filme) {
 		
-		Filme.setId((long) this.listaFilmes.size());
-		
-		this.listaFilmes.add(Filme);
-				
-		return "Filme cadastrado";
+		Filme.setId((long) this.listaFilmes.size());		
+		this.listaFilmes.add(Filme);				
+		return "Filme cadastrado com sucesso!";
 	}	
 		
 	@PUT
@@ -71,7 +68,7 @@ public class FilmesResources {
 		FilmeEncontrado.setDuracao(Filme.getDuracao());
 		FilmeEncontrado.setTrailer(Filme.getTrailer());
 				
-		return "Filme alterado";
+		return "Filme Alterado com Sucesso!";
 	}
 	
 	@Path("{id}")
