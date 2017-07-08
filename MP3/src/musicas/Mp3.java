@@ -3,7 +3,6 @@ package musicas;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -24,11 +23,6 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
-import javazoom.jl.player.advanced.AdvancedPlayer;
-import javazoom.jl.player.advanced.PlaybackEvent;
-import javazoom.jl.player.advanced.PlaybackListener;
-import java.awt.Component;
-import javax.swing.Box;
 
 public class Mp3 extends JFrame {
 
