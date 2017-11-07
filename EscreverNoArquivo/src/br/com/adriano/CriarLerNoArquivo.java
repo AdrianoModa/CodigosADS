@@ -11,7 +11,7 @@ public class CriarLerNoArquivo {
 
 	public void abrirArquivoNotepad(){
 		Path caminho = Paths.get(System.getProperty("user.home") + "/Teste.txt"); 
-		String texto = "TesteTesteTesteTesteTesteTeste"; //JOptionPane.showInputDialog(null, "Digite o texto aqui");  
+		String texto = JOptionPane.showInputDialog(null, "Digite o texto aqui");  
 		byte[] escreverArquivo = texto.getBytes();
 		{ 
 			try{
