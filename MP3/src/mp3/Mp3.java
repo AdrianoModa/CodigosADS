@@ -1,4 +1,4 @@
-package musicas;
+package mp3;
 
 import java.awt.Color;
 import java.awt.EventQueue;
